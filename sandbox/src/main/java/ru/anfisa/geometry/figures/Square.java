@@ -1,17 +1,26 @@
 package ru.anfisa.geometry.figures;
 
 public class Square {
-    public static void printSquareArea(double side) {
+
+    private double side;
+
+    public Square(double side) {
+        this.side = side;
+    }
+
+    public static void printSquareArea(Square s) {
         String text = String.format(
-                "Площадь квадрата со стороной %f = %f", side, area(side));
+                "Площадь квадрата со стороной %f = %f", s.side, s.area());
         System.out.println(text);
     }
 
-    public static double area(double side) {
-        return side * side;
+
+
+    public double area() {
+        return this.side * this.side;
     }
 
-    public static double perimeter(double side) {
-        return side * 4;
+    public double perimeter() {
+        return this.side * 4;
     }
 }
