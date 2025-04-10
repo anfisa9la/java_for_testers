@@ -44,4 +44,34 @@ public class TriangleTests {
         var result = new Triangle(3.0, 6.0, 6.0).perimeter();
         Assertions.assertEquals(15, result);
     }
+
+    @Test
+    void canCheckTriangleInequality1() {
+        try {
+            new Triangle(1, 2, 10);
+            Assertions.fail();
+        } catch (IllegalArgumentException exception) {
+
+        }
+    }
+
+    @Test
+    void canCheckTriangleInequality2() {
+        try {
+            new Triangle(16, 2, 1);
+            Assertions.fail();
+        } catch (IllegalArgumentException exception) {
+
+        }
+    }
+
+    @Test
+    void canCheckTriangleInequality3() {
+        try {
+            new Triangle(6, 29, 1);
+            Assertions.fail();
+        } catch (IllegalArgumentException exception) {
+
+        }
+    }
 }

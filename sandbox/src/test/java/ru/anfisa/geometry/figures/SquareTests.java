@@ -18,4 +18,15 @@ public class SquareTests {
         var result = new Square(5.0).perimeter();
         Assertions.assertEquals(20, result);
     }
+
+    @Test
+    void canCalculateSquareWithNegativeSide() {
+        try {
+            new Square(-1);
+            Assertions.fail();
+        } catch (IllegalArgumentException exception) {
+
+        }
+
+    }
 }
