@@ -30,9 +30,25 @@ public class Triangle {
                 && Double.compare(this.side2, triangle.side2) == 0
                 && Double.compare(this.side3, triangle.side3) == 0)
 
+                || (Double.compare(this.side1, triangle.side1) == 0
+                && Double.compare(this.side2, triangle.side3) == 0
+                && Double.compare(this.side3, triangle.side2) == 0)
+
+                || (Double.compare(this.side1, triangle.side3) == 0
+                && Double.compare(this.side2, triangle.side2) == 0
+                && Double.compare(this.side3, triangle.side1) == 0)
+
+                || (Double.compare(this.side1, triangle.side2) == 0
+                && Double.compare(this.side2, triangle.side3) == 0
+                && Double.compare(this.side3, triangle.side1) == 0)
+
                 || (Double.compare(this.side1, triangle.side2) == 0
                 && Double.compare(this.side2, triangle.side1) == 0
-                && Double.compare(this.side3, triangle.side1) == 0);
+                && Double.compare(this.side3, triangle.side3) == 0)
+
+                || (Double.compare(this.side1, triangle.side3) == 0
+                && Double.compare(this.side2, triangle.side1) == 0
+                && Double.compare(this.side3, triangle.side2) == 0);
     }
 
     @Override
