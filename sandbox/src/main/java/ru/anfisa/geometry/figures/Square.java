@@ -12,6 +12,13 @@ public class Square {
         }
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Square square = (Square) o;
+        return (Double.compare(this.side, square.side) == 0);
+    }
+
     public static void printSquareArea(Square s) {
         String text = String.format(
                 "Площадь квадрата со стороной %f = %f", s.side, s.area());
