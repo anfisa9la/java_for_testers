@@ -10,6 +10,7 @@ public class ApplicationManager {
     protected WebDriver driver;
     private LoginHelper session;
     private GroupHelper groups;
+    private ContactHelper contacts;
 
     public void init() {
         if (driver == null) {
@@ -42,6 +43,13 @@ public class ApplicationManager {
         } catch (NoSuchElementException exception) {
             return false;
         }
+    }
+
+    public ContactHelper contacts() {
+        if (contacts == null) {
+            contacts = new ContactHelper(this);
+        }
+        return contacts;
     }
 
 }
