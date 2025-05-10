@@ -38,4 +38,8 @@ public class ContactHelper {
     public boolean isContactPresent() {
         return manager.IsElementPresent(By.name("selected[]"));
     }
+
+    public int getCount() {
+        return manager.driver.findElements(By.name("selected[]")).size();
+    }
 }
