@@ -11,4 +11,9 @@ public class ContactDeleteTests extends TestBase {
         app.contacts().deleteContact();
     }
 
+    @Test
+    public void testDeleteAllContacts() {
+        app.contacts().removeAllContacts();
+    }
+
 }

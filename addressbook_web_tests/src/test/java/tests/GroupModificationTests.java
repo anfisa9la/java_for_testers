@@ -31,6 +31,5 @@ public class GroupModificationTests extends TestBase{
         newGroups.sort(compareById);
         expectedList.sort((compareById));
         Assertions.assertEquals(Set.copyOf(newGroups), Set.copyOf(expectedList));
-
     }
 }

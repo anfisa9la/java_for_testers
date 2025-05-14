@@ -25,8 +25,6 @@ public class ContactHelper extends HelperBase {
     }
 
 
-
-
     public void deleteContact() {
         if (!isContactPresent()) {
             createContact(new ContactData("id", "name1", "name2", "name3"));
@@ -34,7 +32,6 @@ public class ContactHelper extends HelperBase {
         manager.driver.findElement(By.name("selected[]")).click();
         manager.driver.findElement(By.xpath("//input[@value=\'Delete\']")).click();
     }
-
 
     public boolean isContactPresent() {
         return manager.IsElementPresent(By.name("selected[]"));
@@ -69,4 +66,34 @@ public class ContactHelper extends HelperBase {
         }
         return contacts;
     }
+
+    public void modifyContact(ContactData contact, ContactData modifiedContact) {
+        selectContact(contact);
+        initModifyContact();
+        fillContactForm(modifiedContact);
+        submitContactModification();
+        returnToHomePage();
+    }
+
+    public void selectContact(ContactData contact) {
+        click(By.cssSelector(String.format("input[id='%s']", contact.id())));
+    }
+
+    private void initModifyContact() {
+        click(By.xpath("//img[@alt=\'Edit\']"));
+    }
+
+    private void fillContactForm(ContactData contact) {
+        click(By.name("firstname"));
+        type(By.name("firstname"), contact.firstName());
+        click(By.name("lastname"));
+        type(By.name("lastname"), contact.lastName());
+        click(By.name("middlename"));
+        type(By.name("middlename"), contact.middleName());
+    }
+
+    private void submitContactModification() {
+        click(By.name("update"));
+    }
+
 }
