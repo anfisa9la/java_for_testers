@@ -17,9 +17,9 @@ public class GroupHelper {
         returnToGroupsPage();
     }
 
-    public void modifyGroup(GroupData modifiedGroup) {
+    public void modifyGroup(GroupData group, GroupData modifiedGroup) {
         openGroupsPage();
-        selectGroup(null);
+        selectGroup(group);
         initGroupModification();
         fillGroupForm(modifiedGroup);
         submitGroupModification();
@@ -62,6 +62,7 @@ public class GroupHelper {
     }
 
     public boolean isGroupPresent() {
+        openGroupsPage();
         return manager.IsElementPresent(By.name("selected[]"));
     }
 
@@ -87,6 +88,7 @@ public class GroupHelper {
 
     private void fillGroupForm(GroupData group) {
         manager.driver.findElement(By.name("group_name")).click();
+        manager.driver.findElement(By.name("group_name")).clear();
         manager.driver.findElement(By.name("group_name")).sendKeys(group.name());
         manager.driver.findElement(By.name("group_header")).click();
         manager.driver.findElement(By.name("group_header")).sendKeys(group.header());
@@ -103,6 +105,7 @@ public class GroupHelper {
     }
 
     public List<GroupData> getList() {
+        openGroupsPage();
         var groups = new ArrayList<GroupData>();
         var spans = manager.driver.findElements(By.cssSelector("span.group"));
         for (var span : spans) {

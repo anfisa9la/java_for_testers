@@ -3,11 +3,12 @@ package manager;
 import model.ContactData;
 import org.openqa.selenium.By;
 
-public class ContactHelper {
-    private final ApplicationManager manager;
+import java.util.ArrayList;
+import java.util.List;
 
+public class ContactHelper extends HelperBase {
     public ContactHelper(ApplicationManager manager) {
-        this.manager = manager;
+        super(manager);
     }
 
 
@@ -28,7 +29,7 @@ public class ContactHelper {
 
     public void deleteContact() {
         if (!isContactPresent()) {
-            createContact(new ContactData("name1", "name2", "name3"));
+            createContact(new ContactData("id", "name1", "name2", "name3"));
         }
         manager.driver.findElement(By.name("selected[]")).click();
         manager.driver.findElement(By.xpath("//input[@value=\'Delete\']")).click();
@@ -41,5 +42,31 @@ public class ContactHelper {
 
     public int getCount() {
         return manager.driver.findElements(By.name("selected[]")).size();
+    }
+
+    public void removeAllContacts() {
+        selectAllContacts();
+        click(By.xpath("//input[@value=\'Delete\']"));
+    }
+
+    private void selectAllContacts() {
+        click(By.id("MassCB"));
+    }
+
+
+    public void returnToHomePage() {
+        click(By.linkText("home"));
+    }
+
+
+    public List<ContactData> getList() {
+        var contacts = new ArrayList<ContactData>();
+        var trs = manager.driver.findElements(By.name("entry"));
+        for (var tr : trs){
+            var checkbox = tr.findElement(By.name("selected[]"));
+            var id = checkbox.getDomAttribute("value");
+            contacts.add(new ContactData().withId(id).withFirstName("").withLastName(""));
+        }
+        return contacts;
     }
 }
