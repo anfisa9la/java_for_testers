@@ -62,7 +62,10 @@ public class ContactHelper extends HelperBase {
         for (var tr : trs){
             var checkbox = tr.findElement(By.name("selected[]"));
             var id = checkbox.getDomAttribute("value");
-            contacts.add(new ContactData().withId(id).withFirstName("").withLastName(""));
+            var lastname = tr.findElement(By.cssSelector("td:nth-child(2)")).getText();
+            var firstname = tr.findElement(By.cssSelector("td:nth-child(3)")).getText();
+            var middlename = tr.findElement(By.cssSelector("td:nth-child(4)")).getText();
+            contacts.add(new ContactData().withId(id).withFirstName(firstname).withLastName(lastname).withMiddleName(middlename));
         }
         return contacts;
     }

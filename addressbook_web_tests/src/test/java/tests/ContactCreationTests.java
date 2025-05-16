@@ -53,8 +53,13 @@ public class ContactCreationTests extends TestBase {
         };
         newContacts.sort(compareById);
         var expectedList = new ArrayList<>(oldContacts);
-        expectedList.add(contact.withId(newContacts.get(newContacts.size() - 1).id()).withFirstName("").
-                withLastName("").withMiddleName(""));
+        ContactData lastContact = newContacts.get(newContacts.size() - 1);
+
+        expectedList.add(contact.withId(lastContact.id())
+                .withFirstName(lastContact.firstName())
+                .withLastName(lastContact.lastName())
+                .withMiddleName(lastContact.middleName()));
+
         expectedList.sort(compareById);
         Assertions.assertEquals(newContacts, expectedList);
     }
