@@ -14,7 +14,7 @@ public class ContactModificationTests extends TestBase {
     @Test
     void canModifyContact() throws InterruptedException {
         if (!app.contacts().isContactPresent()) {
-            app.contacts().createContact(new ContactData("", "0", "1", "2"));
+            app.contacts().createContact(new ContactData("", "0", "1", "2", ""));
         }
 
         Comparator<ContactData> compareById = (o1, o2) -> {
