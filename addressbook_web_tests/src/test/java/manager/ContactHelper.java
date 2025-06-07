@@ -1,7 +1,9 @@
 package manager;
 
 import model.ContactData;
+import model.GroupData;
 import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.Select;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +13,23 @@ public class ContactHelper extends HelperBase {
         super(manager);
     }
 
+
+    public void createContactInGroup(ContactData contact, GroupData group) {
+        manager.driver.findElement(By.linkText("add new")).click();
+        manager.driver.findElement(By.name("firstname")).click();
+        manager.driver.findElement(By.name("firstname")).sendKeys(contact.firstName());
+        manager.driver.findElement(By.name("middlename")).click();
+        manager.driver.findElement(By.name("middlename")).sendKeys(contact.middleName());
+        manager.driver.findElement(By.name("lastname")).click();
+        manager.driver.findElement(By.name("lastname")).sendKeys(contact.lastName());
+        selectGroup(group);
+        manager.driver.findElement(By.name("submit")).click();
+        manager.driver.findElement(By.linkText("home page")).click();
+    }
+
+    private void selectGroup(GroupData group) {
+        new Select(manager.driver.findElement(By.name("new_group"))).selectByValue(group.id());
+    }
 
     public void createContact(ContactData contact) {
         manager.driver.findElement(By.linkText("add new")).click();
@@ -54,7 +73,7 @@ public class ContactHelper extends HelperBase {
     public void returnToHomePage() {
         click(By.linkText("home"));
     }
-
+    
 
     public List<ContactData> getList() {
         var contacts = new ArrayList<ContactData>();

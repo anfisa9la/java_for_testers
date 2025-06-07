@@ -52,6 +52,12 @@ public class GroupCreationTests extends TestBase {
         return result;
     }
 
+    public static List<GroupData> singleRandomGroup() {
+        return List.of(new GroupData()
+                .withName(CommonFunctions.randomString(10))
+                .withHeader(CommonFunctions.randomString(10))
+                .withFooter(CommonFunctions.randomString(10)));
+    }
 
 /*
     @ParameterizedTest
@@ -66,13 +72,14 @@ public class GroupCreationTests extends TestBase {
  */
 
     @ParameterizedTest
-    @MethodSource("groupProvider")
-    public void testCreateMultipleGroups2(GroupData group) {
-        var oldGroups = app.groups().getList();
+    @MethodSource("singleRandomGroup")
+    public void testCreateGroup(GroupData group) {
+        var oldGroups = app.jdbc().getGroupList();
 
         app.groups().createGroup(group);
 
-        var newGroups = app.groups().getList();
+        var newGroups = app.jdbc().getGroupList();
+        var maxId = newGroups.get(newGroups.size() - 1).id();
         var expectedList = new ArrayList<>(oldGroups);
 
         Comparator<GroupData> compareById = (o1, o2) -> {
@@ -80,10 +87,32 @@ public class GroupCreationTests extends TestBase {
         };
         newGroups.sort(compareById);
 
-        expectedList.add(group.withId(newGroups.get(newGroups.size() - 1).id()).withHeader("").withFooter(""));
+        expectedList.add(group.withId(maxId));
         expectedList.sort((compareById));
-
         Assertions.assertEquals(newGroups, expectedList);
+
+    }
+
+    @ParameterizedTest
+    @MethodSource("singleRandomGroup")
+    public void testCreateGroupHbm(GroupData group) {
+        var oldGroups = app.hbm().getGroupList();
+
+        app.groups().createGroup(group);
+
+        var newGroups = app.hbm().getGroupList();
+        var maxId = newGroups.get(newGroups.size() - 1).id();
+        var expectedList = new ArrayList<>(oldGroups);
+
+        Comparator<GroupData> compareById = (o1, o2) -> {
+            return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));
+        };
+        newGroups.sort(compareById);
+
+        expectedList.add(group.withId(maxId));
+        expectedList.sort((compareById));
+        Assertions.assertEquals(newGroups, expectedList);
+
     }
 
     @ParameterizedTest

@@ -12,16 +12,16 @@ import java.util.Set;
 public class GroupModificationTests extends TestBase{
     @Test
     void testModifyGroup() {
-        if (!app.groups().isGroupPresent()) {
-            app.groups().createGroup(new GroupData("", "name", "1", "2"));
+        if (app.hbm().getGroupCount() == 0) {
+            app.hbm().createGroup(new GroupData("", "name", "1", "2"));
         }
-        var oldGroups = app.groups().getList();
+        var oldGroups = app.hbm().getGroupList();
         var rnd = new Random();
         var index = rnd.nextInt(oldGroups.size());
 
         var testData = new GroupData().withName("modified name");
         app.groups().modifyGroup(oldGroups.get(index), testData);
-        var newGroups = app.groups().getList();
+        var newGroups = app.hbm().getGroupList();
         var expectedList = new ArrayList<>(oldGroups);
         expectedList.set(index, testData.withId(oldGroups.get(index).id()));
 

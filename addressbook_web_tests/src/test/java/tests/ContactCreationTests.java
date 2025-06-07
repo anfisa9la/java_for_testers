@@ -94,4 +94,23 @@ public class ContactCreationTests extends TestBase {
         app.contacts().createContact(contact);
     }
 
+    @Test
+    public void testCreateContactInGroup() {
+        var contact = new ContactData()
+                .withFirstName(CommonFunctions.randomString(5))
+                .withLastName(CommonFunctions.randomString(5))
+                .withPhoto(randomFile("src/test/resources/images"));
+
+        if (app.hbm().getGroupCount() == 0) {
+            app.hbm().createGroup(new GroupData("", "name", "1", "2"));
+        }
+        var group = app.groups().getList().get(0);
+
+        var oldRelated = app.hbm().getContactsInGroup(group);
+        app.contacts().createContactInGroup(contact, group);
+        var newRelated = app.hbm().getContactsInGroup(group);
+        Assertions.assertEquals(oldRelated.size() + 1, newRelated.size());
+    }
+
+
 }
