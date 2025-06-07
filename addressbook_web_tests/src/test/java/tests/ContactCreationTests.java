@@ -132,6 +132,22 @@ public class ContactCreationTests extends TestBase {
         app.contacts().createContactInGroup(contact, group);
         var newRelated = app.hbm().getContactsInGroup(group);
         Assertions.assertEquals(oldRelated.size() + 1, newRelated.size());
+
+        Comparator<ContactData> compareById = (o1, o2) -> {
+            return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));
+        };
+        ContactData lastContact = newRelated.get(newRelated.size() - 1);
+        oldRelated.sort(compareById);
+        oldRelated.add(contact.withId(lastContact.id())
+                .withFirstName(lastContact.firstName())
+                .withLastName(lastContact.lastName())
+                .withMiddleName(lastContact.middleName())
+                .withEmail(lastContact.email())
+                .withAddress(lastContact.address())
+                .withPhoto(lastContact.photo()));
+
+        newRelated.sort(compareById);
+        Assertions.assertEquals(oldRelated, newRelated);
     }
 
 

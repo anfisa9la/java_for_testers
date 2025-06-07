@@ -123,4 +123,13 @@ public class ContactHelper extends HelperBase {
         click(By.name("update"));
     }
 
+    public void deleteContactFromGroup(ContactData contact, GroupData group) {
+        returnToHomePage();
+        new Select(manager.driver.findElement(By.name("group"))).selectByValue(group.id());
+        selectContact(contact);
+        click(By.name("remove"));
+        returnToHomePage();
+    }
+
+
 }

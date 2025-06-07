@@ -1,6 +1,8 @@
 package tests;
 
+import common.CommonFunctions;
 import model.ContactData;
+import model.GroupData;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -30,6 +32,47 @@ public class ContactDeleteTests extends TestBase {
         expectedResult.sort(compareById);
 
         Assertions.assertEquals(newContacts, expectedResult);
+    }
+
+    @Test
+    void deleteContactFromGroup() {
+        if (app.hbm().getGroupCount() == 0) {
+            app.hbm().createGroup(new GroupData("", "name", "1", "2"));
+        }
+        var group = app.groups().getList().get(0);
+
+        var oldRelated = app.hbm().getContactsInGroup(group);
+        if (oldRelated.isEmpty()) {
+            var new_contact = new ContactData()
+                    .withFirstName(CommonFunctions.randomString(5))
+                    .withLastName(CommonFunctions.randomString(5))
+                    .withAddress(CommonFunctions.randomString(5));
+            app.contacts().createContactInGroup(new_contact, group);
+
+            var rndContact = new Random();
+            var indexContact = rndContact.nextInt(app.hbm().getContactsInGroup(group).size());
+            var contact = app.hbm().getContactsInGroup(group).get(indexContact);
+
+            app.contacts().deleteContactFromGroup(contact, group);
+            var newRelated = app.hbm().getContactsInGroup(group);
+            var expectedList = new ArrayList<>(oldRelated);
+            Assertions.assertEquals(expectedList, newRelated);
+        } else {
+            var rndContact = new Random();
+            var indexContact = rndContact.nextInt(app.hbm().getContactsInGroup(group).size());
+            var contact = app.hbm().getContactsInGroup(group).get(indexContact);
+            app.contacts().deleteContactFromGroup(contact, group);
+            var newRelated = app.hbm().getContactsInGroup(group);
+
+            Comparator<ContactData> compareById = (o1, o2) -> {
+                return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));
+            };
+            newRelated.sort(compareById);
+            var expectedList = new ArrayList<>(oldRelated);
+            expectedList.remove(indexContact);
+            expectedList.sort(compareById);
+            Assertions.assertEquals(expectedList, newRelated);
+        }
     }
 
     @Test
