@@ -46,9 +46,14 @@ public class ContactHelper extends HelperBase {
 
     public void deleteContact() {
         if (!isContactPresent()) {
-            createContact(new ContactData("id", "name1", "name2", "name3", ""));
+            createContact(new ContactData("id", "name1", "name2", "name3", "", "", ""));
         }
         manager.driver.findElement(By.name("selected[]")).click();
+        manager.driver.findElement(By.xpath("//input[@value=\'Delete\']")).click();
+    }
+
+    public void deleteContactWithId(ContactData contact) {
+        click(By.cssSelector(String.format("input[id='%s']", contact.id())));
         manager.driver.findElement(By.xpath("//input[@value=\'Delete\']")).click();
     }
 

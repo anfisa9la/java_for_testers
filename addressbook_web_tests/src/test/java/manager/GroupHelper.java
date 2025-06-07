@@ -91,8 +91,10 @@ public class GroupHelper {
         manager.driver.findElement(By.name("group_name")).clear();
         manager.driver.findElement(By.name("group_name")).sendKeys(group.name());
         manager.driver.findElement(By.name("group_header")).click();
+        manager.driver.findElement(By.name("group_header")).clear();
         manager.driver.findElement(By.name("group_header")).sendKeys(group.header());
         manager.driver.findElement(By.name("group_footer")).click();
+        manager.driver.findElement(By.name("group_footer")).clear();
         manager.driver.findElement(By.name("group_footer")).sendKeys(group.footer());
     }
 

@@ -50,7 +50,7 @@ public class ContactCreationTests extends TestBase {
 
     public static List<ContactData> negativeContactProvider() {
         var result = new ArrayList<ContactData>(List.of(
-                new ContactData("", " ' ", "", "", "")));
+                new ContactData("", " ' ", "", "", "", "", "")));
         return result;
     }
 
@@ -74,6 +74,28 @@ public class ContactCreationTests extends TestBase {
 
         expectedList.sort(compareById);
         Assertions.assertEquals(newContacts, expectedList);
+    }
+
+    @ParameterizedTest
+    @MethodSource("contactProvider")
+    public void createContactHbm(ContactData contact) {
+        List<ContactData> oldContacts = app.hbm().getContactList();
+        app.contacts().createContact(contact);
+        List<ContactData> newContacts = app.hbm().getContactList();
+        List<ContactData> expectedResult = new ArrayList<>(oldContacts);
+        Comparator<ContactData> compareById = (o1, o2) -> {
+            return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));
+        };
+        newContacts.sort(compareById);
+        ContactData lastElement = newContacts.get(newContacts.size() - 1);
+        expectedResult.add(contact.withId(lastElement.id())
+                .withFirstName(lastElement.firstName())
+                .withLastName(lastElement.lastName())
+                .withMiddleName(lastElement.middleName())
+                .withAddress(lastElement.address())
+                .withEmail(lastElement.email()));
+        expectedResult.sort(compareById);
+        Assertions.assertEquals(newContacts, expectedResult);
     }
 
     @ParameterizedTest
