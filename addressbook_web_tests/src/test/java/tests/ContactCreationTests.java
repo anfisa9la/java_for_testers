@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Random;
 
 public class ContactCreationTests extends TestBase {
 
@@ -148,6 +149,29 @@ public class ContactCreationTests extends TestBase {
 
         newRelated.sort(compareById);
         Assertions.assertEquals(oldRelated, newRelated);
+    }
+
+    @Test
+    public void testAddExistedContactToGroup() throws InterruptedException {
+        if (app.hbm().getContactCount() == 0) {
+            app.hbm().createContact(new ContactData("", "1", "2", "3", "", "4", "5"));
+        }
+        List<ContactData> oldContacts = app.hbm().getContactList();
+        var rnd = new Random();
+        var index = rnd.nextInt(oldContacts.size());
+        var contact = app.contacts().getList().get(index);
+
+        if (app.hbm().getGroupCount() == 0) {
+            app.hbm().createGroup(new GroupData("", "name", "1", "2"));
+        }
+        var group = app.groups().getList().get(0);
+
+        app.jdbc().deleteContactFromGroup(contact, group);
+        app.contacts().addContactToGroup(contact, group);
+
+        Assertions.assertTrue(app.jdbc().checkLink(group, contact));
+
+
     }
 
 

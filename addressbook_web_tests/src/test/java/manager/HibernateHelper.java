@@ -112,4 +112,5 @@ public class HibernateHelper extends HelperBase {
             return convertContactList(session.createQuery("from ContactRecord", ContactRecord.class).list());
         });
     }
+
 }

@@ -27,6 +27,15 @@ public class ContactHelper extends HelperBase {
         manager.driver.findElement(By.linkText("home page")).click();
     }
 
+
+    public void addContactToGroup(ContactData contact, GroupData group) throws InterruptedException {
+        returnToHomePage();
+        Thread.sleep(1000);
+        selectContact(contact);
+        new Select(manager.driver.findElement(By.name("to_group"))).selectByValue(group.id());
+        manager.driver.findElement(By.name("add")).click();
+    }
+
     private void selectGroup(GroupData group) {
         new Select(manager.driver.findElement(By.name("new_group"))).selectByValue(group.id());
     }

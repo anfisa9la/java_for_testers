@@ -1,5 +1,6 @@
 package manager;
 
+import model.ContactData;
 import model.GroupData;
 
 import java.sql.DriverManager;
@@ -41,6 +42,28 @@ public class JdbcHelper extends HelperBase{
         {  if (result.next()) {
             throw new IllegalStateException("DB is corrupted");
         }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void deleteContactFromGroup(ContactData contact, GroupData group) {
+
+        try (var conn = DriverManager.getConnection("jdbc:mysql://localhost/addressbook", "root", "");
+             var statement = conn.createStatement();
+             )
+        {
+            statement.execute(String.format("DELETE FROM address_in_groups WHERE group_id = '%s' AND id = '%s'", contact.id(), group.id()));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static boolean checkLink(GroupData group, ContactData contact) {
+        try (var conn = DriverManager.getConnection("jdbc:mysql://localhost/addressbook", "root", "");
+             var statement = conn.createStatement();
+             var result = statement.executeQuery(String.format("SELECT * FROM address_in_groups WHERE id = '%s' AND group_id = '%s'", contact.id(), group.id()))) {
+            return result.next();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
