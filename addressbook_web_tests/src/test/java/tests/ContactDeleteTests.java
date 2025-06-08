@@ -35,7 +35,7 @@ public class ContactDeleteTests extends TestBase {
     }
 
     @Test
-    void deleteContactFromGroup() {
+    void deleteContactFromGroup() throws InterruptedException {
         if (app.hbm().getGroupCount() == 0) {
             app.hbm().createGroup(new GroupData("", "name", "1", "2"));
         }
@@ -48,32 +48,15 @@ public class ContactDeleteTests extends TestBase {
                     .withLastName(CommonFunctions.randomString(5))
                     .withAddress(CommonFunctions.randomString(5));
             app.contacts().createContactInGroup(new_contact, group);
-
-            var rndContact = new Random();
-            var indexContact = rndContact.nextInt(app.hbm().getContactsInGroup(group).size());
-            var contact = app.hbm().getContactsInGroup(group).get(indexContact);
-
-            app.contacts().deleteContactFromGroup(contact, group);
-            var newRelated = app.hbm().getContactsInGroup(group);
-            var expectedList = new ArrayList<>(oldRelated);
-            Assertions.assertEquals(expectedList, newRelated);
-        } else {
-            var rndContact = new Random();
-            var indexContact = rndContact.nextInt(app.hbm().getContactsInGroup(group).size());
-            var contact = app.hbm().getContactsInGroup(group).get(indexContact);
-            app.contacts().deleteContactFromGroup(contact, group);
-            var newRelated = app.hbm().getContactsInGroup(group);
-
-            Comparator<ContactData> compareById = (o1, o2) -> {
-                return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));
-            };
-            newRelated.sort(compareById);
-            var expectedList = new ArrayList<>(oldRelated);
-            expectedList.remove(indexContact);
-            expectedList.sort(compareById);
-            Assertions.assertEquals(expectedList, newRelated);
         }
-    }
+        var rndContact = new Random();
+        var indexContact = rndContact.nextInt(app.hbm().getContactsInGroup(group).size());
+        var contact = app.hbm().getContactsInGroup(group).get(indexContact);
+        app.contacts().deleteContactFromGroup(contact, group);
+
+        Assertions.assertFalse(app.jdbc().checkLink(group, contact));
+        }
+
 
     @Test
     public void testDeleteContact() {

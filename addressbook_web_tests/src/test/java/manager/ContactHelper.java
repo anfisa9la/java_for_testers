@@ -132,8 +132,9 @@ public class ContactHelper extends HelperBase {
         click(By.name("update"));
     }
 
-    public void deleteContactFromGroup(ContactData contact, GroupData group) {
+    public void deleteContactFromGroup(ContactData contact, GroupData group) throws InterruptedException {
         returnToHomePage();
+        Thread.sleep(1000);
         new Select(manager.driver.findElement(By.name("group"))).selectByValue(group.id());
         selectContact(contact);
         click(By.name("remove"));
