@@ -62,7 +62,7 @@ public class JdbcHelper extends HelperBase{
     public static boolean checkLink(GroupData group, ContactData contact) {
         try (var conn = DriverManager.getConnection("jdbc:mysql://localhost/addressbook", "root", "");
              var statement = conn.createStatement();
-             var result = statement.executeQuery(String.format("SELECT * FROM address_in_groups WHERE id = '%s' AND group_id = '%s'", contact.id(), group.id()))) {
+             var result = statement.executeQuery(String.format("SELECT * FROM address_in_groups WHERE id = '%s' AND group_id = '%s'", group.id(), contact.id()))) {
             return result.next();
         } catch (SQLException e) {
             throw new RuntimeException(e);
