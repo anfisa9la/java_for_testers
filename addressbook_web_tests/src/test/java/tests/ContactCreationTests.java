@@ -51,7 +51,7 @@ public class ContactCreationTests extends TestBase {
 
     public static List<ContactData> negativeContactProvider() {
         var result = new ArrayList<ContactData>(List.of(
-                new ContactData("", " ' ", "", "", "", "", "")));
+                new ContactData("", " ' ", "", "", "", "", "", "", "", "", "", "", "")));
         return result;
     }
 
@@ -154,7 +154,7 @@ public class ContactCreationTests extends TestBase {
     @Test
     public void testAddExistedContactToGroup() throws InterruptedException {
         if (app.hbm().getContactCount() == 0) {
-            app.hbm().createContact(new ContactData("", "1", "2", "3", "", "4", "5"));
+            app.hbm().createContact(new ContactData("", "1", "2", "3", "", "4", "5", "", "", "", "", "", ""));
         }
         List<ContactData> oldContacts = app.hbm().getContactList();
         var rnd = new Random();

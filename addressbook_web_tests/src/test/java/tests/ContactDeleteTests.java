@@ -16,7 +16,7 @@ public class ContactDeleteTests extends TestBase {
     @Test
     public void deleteContactHbm() {
         if (app.hbm().getContactCount() == 0) {
-            app.hbm().createContact(new ContactData("", "1", "2", "3", "", "4", "5"));
+            app.hbm().createContact(new ContactData("", "1", "2", "3", "", "4", "5", "", "", "", "", "", ""));
         }
         List<ContactData> oldContacts = app.hbm().getContactList();
         var rnd = new Random();

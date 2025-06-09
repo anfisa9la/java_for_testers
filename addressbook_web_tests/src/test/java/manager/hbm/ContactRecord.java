@@ -13,6 +13,12 @@ public class ContactRecord {
     public String firstname;
     public String lastname;
     public String middlename = new String("");
+    public String home;
+    public String mobile;
+    public String work;
+    public String phone2;
+    public String email2;
+    public String email3;
 
     public ContactRecord(){
     }

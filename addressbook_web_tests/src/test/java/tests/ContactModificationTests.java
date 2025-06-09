@@ -1,7 +1,6 @@
 package tests;
 
 import model.ContactData;
-import model.GroupData;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +14,7 @@ public class ContactModificationTests extends TestBase {
     @Test
     void canModifyContact() throws InterruptedException {
         if (app.hbm().getContactCount() == 0) {
-            app.hbm().createContact(new ContactData("", "1", "2", "3", "", "4", "5"));
+            app.hbm().createContact(new ContactData("", "1", "2", "3", "", "4", "5", "", "", "", "", "", ""));
         }
 
         Comparator<ContactData> compareById = (o1, o2) -> {
