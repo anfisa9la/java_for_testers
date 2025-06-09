@@ -12,7 +12,7 @@ public class ContactInfoTests extends TestBase{
     @Test
     void testPhones() {
         if (app.hbm().getContactCount() == 0) {
-            app.hbm().createContact(new ContactData("", "Name", "middleName", "lastName", "", "address", "email", "", "", "", "", "", ""));
+            app.hbm().createContact(new ContactData("", "Name", "middleName", "lastName", "", "address", "email", "1111", "", "123321", "", "email2", "email3"));
             app.contacts().returnToHomePage();
         }
 
@@ -31,7 +31,7 @@ public class ContactInfoTests extends TestBase{
     @Test
     void testAllContactInfo() {
         if (app.hbm().getContactCount() == 0) {
-            app.hbm().createContact(new ContactData("", "Name", "middleName", "lastName", "", "address", "email", "", "", "", "", "", ""));
+            app.hbm().createContact(new ContactData("", "Name", "middleName", "lastName", "", "address", "email", "1234", "4567", "111", "888", "testemail2", "testemail3"));
             app.contacts().returnToHomePage();
         }
 
