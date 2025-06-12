@@ -53,7 +53,7 @@ public class JdbcHelper extends HelperBase{
              var statement = conn.createStatement();
              )
         {
-            statement.execute(String.format("DELETE FROM address_in_groups WHERE group_id = '%s' AND id = '%s'", contact.id(), group.id()));
+            statement.execute(String.format("DELETE FROM address_in_groups WHERE group_id = '%s' AND id = '%s'", group.id(), contact.id()));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
