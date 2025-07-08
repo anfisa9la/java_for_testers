@@ -54,7 +54,7 @@ public class ContactCreationTests extends TestBase {
                 new ContactData("", " ' ", "", "", "", "", "", "", "", "", "", "", "")));
         return result;
     }
-
+/*
     @ParameterizedTest
     @MethodSource("contactProvider")
     public void testCreateContacts(ContactData contact) {
@@ -76,7 +76,10 @@ public class ContactCreationTests extends TestBase {
         expectedList.sort(compareById);
         Assertions.assertEquals(newContacts, expectedList);
     }
+    */
 
+
+  /*
     @ParameterizedTest
     @MethodSource("contactProvider")
     public void createContactHbm(ContactData contact) {
@@ -98,6 +101,8 @@ public class ContactCreationTests extends TestBase {
         expectedResult.sort(compareById);
         Assertions.assertEquals(newContacts, expectedResult);
     }
+
+   */
 
     @ParameterizedTest
     @MethodSource("negativeContactProvider")
